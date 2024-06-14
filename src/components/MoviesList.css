@@ -1,0 +1,10 @@
+/* MoviesList.css */
+ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  ul li {
+    margin: 1rem 0;
+  }
+  
