@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./AddMovie.css";
-const AddMovie=({onAdd})=>{
+const AddMovie=({onAddMovie})=>{
     const [enteredTitle,setEnteredTitle] = useState('');
     const [enteredOpenTxt,setEnteredOpenTxt] = useState('');
     const [enteredDate, setEnteredDate] = useState('');
@@ -11,7 +11,7 @@ const AddMovie=({onAdd})=>{
             openingText:enteredOpenTxt,
             releaseDate:enteredDate,
         }
-        onAdd(movie);
+        onAddMovie(movie);
         setEnteredTitle('');
         setEnteredOpenTxt('');
         setEnteredDate('');

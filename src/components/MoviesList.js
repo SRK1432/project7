@@ -2,6 +2,9 @@ import React from "react";
 import Movie from "./Movie";
 import "./MoviesList.css";
 const MoviesList=(props)=>{
+    const deleteMovieHandler=()=>{
+        
+    }
     return(
         <>
             <ul>
@@ -9,8 +12,10 @@ const MoviesList=(props)=>{
                     <Movie 
                     title={movie.title}
                     releaseDate={movie.releaseDate}
-                    openeingText={movie.openeingText}/>
+                    openeingText={movie.openeingText}
+                    onDeleteMovie ={() => props.onDeleteMovie(movie.id)}/>
                 ))}
+               
             </ul>
         </>
     )
