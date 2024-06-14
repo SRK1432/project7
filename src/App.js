@@ -3,6 +3,7 @@ import MoviesList from "./components/MoviesList";
 
 const App = () => {
   const [movies, setMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const dummyMovies = [
     {
       id: 1,
@@ -19,6 +20,7 @@ const App = () => {
   ];
 
   const fetchMoviesHandler = async () => {
+    setIsLoading(true);
     try {
       const response = await fetch("https://swapi.dev/api/films/");
       const data = await response.json();
@@ -31,6 +33,7 @@ const App = () => {
         };
       });
       setMovies(transformedMovies);
+      setIsLoading(false);
     } catch (error) {
       console.error("Failed to fetch movies:", error);
     }
@@ -39,7 +42,9 @@ const App = () => {
   return (
     <>
       <button onClick={fetchMoviesHandler}>Fetch Movies</button>
-      <MoviesList movies={movies} />
+      { !isLoading &&  <MoviesList movies={movies} />}
+      {!isLoading && movies.length == 0 && <p>Found no Movies</p>}
+      {isLoading && <p>Loading.....</p>}
     </>
   );
 };
