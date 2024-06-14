@@ -1,34 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MoviesList from "./components/MoviesList";
 
 const App = () => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const dummyMovies = [
-    {
-      id: 1,
-      title: "Some dummy movie-1",
-      openingText: "This is the opening text of the movie",
-      releaseDate: "2021-05-18",
-    },
-    {
-      id: 2,
-      title: "Some dummy movie-2",
-      openingText: "This is the opening text of the movie",
-      releaseDate: "2021-05-19",
-    },
-  ];
 
+  useEffect(() => {
+    fetchMoviesHandler();
+  }, []);
+ 
   const fetchMoviesHandler = async () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch("https://swapi.dev/api/films/"); // if we put wrong http then there will be error
+      const response = await fetch("https://swapi.dev/api/films/");
 
-      if(!response.ok){    //means if response is not ok and the error occurs only in http link
-       throw new Error('Something went wrong!!')
-     }
+      if (!response.ok) {
+        throw new Error("Something went wrong!!");
+      }
       const data = await response.json();
 
       const transformedMovies = data.results.map((movieData) => {
@@ -40,7 +30,6 @@ const App = () => {
         };
       });
       setMovies(transformedMovies);
-
     } catch (error) {
       setError(error.message);
     }
@@ -50,10 +39,10 @@ const App = () => {
   return (
     <>
       <button onClick={fetchMoviesHandler}>Fetch Movies</button>
-      { !isLoading &&  <MoviesList movies={movies} />}
-      {!isLoading && movies.length == 0&& !error && <p>Found no Movies</p>}
-      { !isLoading && error && <p>{error}</p>}
-      {isLoading && <p>Loading.....</p>}
+      {!isLoading && movies.length === 0 && !error && <p>Found no movies.</p>}
+      {!isLoading && error && <p>{error}</p>}
+      {isLoading && <p>Loading...</p>}
+      {!isLoading && <MoviesList movies={movies} />}
     </>
   );
 };
