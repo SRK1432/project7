@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import MoviesList from "./components/MoviesList";
+import AddMovie from "./components/AddMovie";
+import "./App.css";
 
 const App = () => {
   const [movies, setMovies] = useState([]);
@@ -10,7 +12,7 @@ const App = () => {
     fetchMoviesHandler();
   }, []);
  
-  const fetchMoviesHandler = async () => {
+  const fetchMoviesHandler = async (event) => {
     setIsLoading(true);
     setError(null);
     try {
@@ -35,14 +37,20 @@ const App = () => {
     }
     setIsLoading(false);
   };
+  const addMovieHandler=(movie)=>{
+    setMovies((prevMovies)=>[...prevMovies,movie])
+  }
 
   return (
     <>
+      <AddMovie onAdd ={addMovieHandler}/>
+
       <button onClick={fetchMoviesHandler}>Fetch Movies</button>
       {!isLoading && movies.length === 0 && !error && <p>Found no movies.</p>}
       {!isLoading && error && <p>{error}</p>}
       {isLoading && <p>Loading...</p>}
       {!isLoading && <MoviesList movies={movies} />}
+
     </>
   );
 };
